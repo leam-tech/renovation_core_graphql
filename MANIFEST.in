@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include renovation_core_graphql *.css
+recursive-include renovation_core_graphql *.csv
+recursive-include renovation_core_graphql *.html
+recursive-include renovation_core_graphql *.ico
+recursive-include renovation_core_graphql *.js
+recursive-include renovation_core_graphql *.json
+recursive-include renovation_core_graphql *.md
+recursive-include renovation_core_graphql *.png
+recursive-include renovation_core_graphql *.py
+recursive-include renovation_core_graphql *.svg
+recursive-include renovation_core_graphql *.txt
+recursive-exclude renovation_core_graphql *.pyc
