@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from . import __version__ as app_version
+from . import __version__ as app_version  # noqa
 
 app_name = "renovation_core_graphql"
 app_title = "Renovation Core Graphql"
@@ -10,6 +10,14 @@ app_icon = "octicon octicon-file-directory"
 app_color = "grey"
 app_email = "info@leam.ae"
 app_license = "MIT"
+
+graphql_sdl_dir = [
+    "./renovation_core_graphql/renovation_core_graphql/auth/sdls",
+]
+
+graphql_schema_processors = [
+    "renovation_core_graphql.auth.bind_schema",
+]
 
 # Includes in <head>
 # ------------------
@@ -46,7 +54,7 @@ app_license = "MIT"
 
 # website user home page (by Role)
 # role_home_page = {
-#	"Role": "home_page"
+#   "Role": "home_page"
 # }
 
 # Generators
@@ -96,7 +104,7 @@ app_license = "MIT"
 # 		"on_update": "method",
 # 		"on_cancel": "method",
 # 		"on_trash": "method"
-#	}
+#   }
 # }
 
 # Scheduled Tasks
@@ -142,4 +150,3 @@ app_license = "MIT"
 # exempt linked doctypes from being automatically cancelled
 #
 # auto_cancel_exempted_doctypes = ["Auto Repeat"]
-

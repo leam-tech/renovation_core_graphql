@@ -1,0 +1,36 @@
+type LoginResponse {
+    user: User!
+    message: String!
+    home_page: String!
+    user_image: String
+    full_name: String!
+    has_quick_login_pin: Boolean!
+    lang: String
+    token: String
+}
+
+type VerifyOTPResponse {
+    status: String!
+    sms: String
+    email: String
+
+    # Login Response
+    user: User
+    message: String
+    home_page: String
+    user_image: String
+    full_name: String
+    has_quick_login_pin: Boolean
+    lang: String
+    token: String
+}
+
+type GenerateOTPResponse {
+    status: String!
+    sms: String
+    email: String
+}
+
+type ChangePasswordResponse {
+    status: String
+}
