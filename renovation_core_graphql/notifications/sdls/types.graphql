@@ -1,0 +1,26 @@
+type RegisterFCMClientResponse {
+    success: String!
+    user: String!
+    token: String!
+    is_huawei_token: Boolean!
+}
+
+type MarkAllFCMReadResponse {
+    success: Boolean!
+}
+
+type MarkFCMSeenResponse {
+    success: Boolean!
+    message_id: String!
+    seen: Boolean!
+}
+
+type FCMNotification {
+    title: String
+    body: String
+    data: String
+
+    message_id: String!
+    seen: Boolean!
+    communication_date: String!
+}
