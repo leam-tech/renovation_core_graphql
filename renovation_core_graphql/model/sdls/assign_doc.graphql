@@ -1,0 +1,17 @@
+enum AssignDocStatus {
+    Open
+    Closed
+    Cancelled
+}
+
+type DocAssignment {
+    reference_type: String!
+    reference_name: String!
+    assigned_to: User!
+    due_date: String
+    assigned_by: User
+    doc: BaseDocType!
+    status: AssignDocStatus
+    priority: String
+    description: String
+}

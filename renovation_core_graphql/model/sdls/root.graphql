@@ -1,0 +1,10 @@
+extend type Query {
+    get_docs_assigned_to_user(user: String!, doctype: String, status: AssignDocStatus): [DocAssignment!]!
+    get_users_assigned_to_doc(doctype: String!, name: String!): [DocAssignment!]!
+}
+
+extend type Mutation {
+    assign_doc(assign_to: String!, doctype: String!, name: String!, description: String, due_date: String): [DocAssignment!]!
+    unassign_doc(doctype: String!, name: String!, assign_to: String!): [DocAssignment!]!
+    set_assignment_status(doctype: String!, name: String!, assign_to: String!, status: AssignDocStatus!): [DocAssignment!]!
+}
