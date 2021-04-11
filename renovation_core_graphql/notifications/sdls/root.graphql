@@ -1,6 +1,6 @@
 extend type Mutation {
     register_fcm_client(token: String!, user: String, is_huawei_token: Boolean): RegisterFCMClientResponse!
     get_user_notifications(ignore_seen: Boolean): [FCMNotification!]!
-    mark_all_fcm_read(): MarkAllFCMReadResponse!
+    mark_all_fcm_read: MarkAllFCMReadResponse!
     mark_fcm_seen(message_id: String!, seen: Boolean): MarkFCMSeenResponse!
 }
