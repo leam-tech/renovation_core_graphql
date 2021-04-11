@@ -1,4 +1,8 @@
 extend type Query {
+    # Meta
+    get_doc_meta_bundle(doctype: String!, user: String): DocMetaBundle!
+
+    # Assign Doc
     get_docs_assigned_to_user(user: String!, doctype: String, status: AssignDocStatus): [DocAssignment!]!
     get_users_assigned_to_doc(doctype: String!, name: String!): [DocAssignment!]!
 }

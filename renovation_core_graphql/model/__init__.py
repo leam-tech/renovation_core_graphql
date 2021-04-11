@@ -1,5 +1,6 @@
 from graphql import GraphQLSchema
 
+from .meta import get_doc_meta_bundle_resolver
 from .assign_doc import \
     get_docs_assigned_to_user_resolver, \
     get_users_assigned_to_doc_resolver, \
@@ -17,3 +18,5 @@ def bind_schema(schema: GraphQLSchema):
     schema.mutation_type.fields["assign_doc"].resolve = assign_doc_resolver
     schema.mutation_type.fields["unassign_doc"].resolve = unassign_doc_resolver
     schema.mutation_type.fields["set_assignment_status"].resolve = set_assignment_status_resolver
+
+    schema.query_type.fields["get_doc_meta_bundle"].resolve = get_doc_meta_bundle_resolver
