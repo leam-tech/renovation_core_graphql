@@ -1,3 +1,18 @@
+enum AuthStatus {
+    SUCCESS
+    FAILED
+}
+
+enum OTPVerifyStatus {
+    SUCCESS
+    FAILED
+    VERIFIED
+    NO_LINKED_USER
+    NO_OTP_GENERATED
+    INVALID_OTP
+    WEAK_PASSWORD
+}
+
 type LoginResponse {
     user: User!
     message: String!
@@ -10,7 +25,7 @@ type LoginResponse {
 }
 
 type VerifyOTPResponse {
-    status: String!
+    status: OTPVerifyStatus!
     sms: String
     email: String
 
@@ -26,11 +41,17 @@ type VerifyOTPResponse {
 }
 
 type GenerateOTPResponse {
-    status: String!
+    status: AuthStatus!
     sms: String
     email: String
 }
 
 type ChangePasswordResponse {
-    status: String
+    status: AuthStatus!
+    user: User!
+}
+
+type ResetPasswordResponse {
+    status: OTPVerifyStatus!
+    user: User
 }

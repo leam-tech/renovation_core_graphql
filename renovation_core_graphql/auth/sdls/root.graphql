@@ -8,4 +8,5 @@ extend type Mutation {
     verify_otp(medium: String!, medium_id: String!, otp: String!, login_to_user: Boolean, use_jwt: Boolean, purpose: String): VerifyOTPResponse!
     pin_login(user: String!, pin: String!, device: String): LoginResponse!
     change_password(old_password: String!, new_password: String!): ChangePasswordResponse!
+    reset_password(medium: String!, medium_id: String!, otp: String!, new_password: String!): ResetPasswordResponse!
 }

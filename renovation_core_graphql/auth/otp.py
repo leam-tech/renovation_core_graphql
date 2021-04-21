@@ -5,8 +5,18 @@ import frappe
 from renovation_core.utils.auth import generate_otp, verify_otp
 
 
+VERIFY_OTP_STATUS_MAP = {
+    "no_linked_user": "NO_LINKED_USER",
+    "no_otp_for_mobile": "NO_OTP_GENERATED",
+    "invalid_otp": "INVALID_OTP",
+    "verified": "VERIFIED",
+}
+
+
 def generate_otp_resolver(obj, info: GraphQLResolveInfo, **kwargs):
-    return generate_otp(**kwargs)
+    r = generate_otp(**kwargs)
+    r.status = "SUCCESS" if r.status == "success" else "FAILED"
+    return r
 
 
 def verify_otp_resolver(obj, info: GraphQLResolveInfo, **kwargs):
@@ -17,6 +27,12 @@ def verify_otp_resolver(obj, info: GraphQLResolveInfo, **kwargs):
 
     status_dict = verify_otp(**kwargs)
     status_dict.update(frappe.local.response)
-    if status_dict["user"]:
+    if status_dict.get("user"):
         status_dict["user"] = frappe._dict(doctype="User", name=status_dict["user"])
+
+    status = status_dict.get("status")
+    if status in VERIFY_OTP_STATUS_MAP:
+        status_dict.status = VERIFY_OTP_STATUS_MAP[status]
+    else:
+        status_dict.status = "FAILED"
     return status_dict
