@@ -9,4 +9,7 @@ def change_pwd_resolver(obj, info: GraphQLResolveInfo, **kwargs):
     if change_password(**kwargs):
         status = "SUCCESS"
 
-    return frappe._dict(status=status)
+    return frappe._dict(status=status, user=frappe._dict(
+        doctype="User",
+        name=frappe.session.user
+    ))

@@ -3,10 +3,10 @@
 # }
 
 extend type Mutation {
-    login(usr: String!, pwd: String!, use_jwt: Boolean): LoginResponse
+    login(usr: String!, pwd: Password!, use_jwt: Boolean): LoginResponse
     generate_otp(medium: String!, medium_id: String!, sms_hash: String, purpose: String, lang: String): GenerateOTPResponse!
-    verify_otp(medium: String!, medium_id: String!, otp: String!, login_to_user: Boolean, use_jwt: Boolean, purpose: String): VerifyOTPResponse!
-    pin_login(user: String!, pin: String!, device: String): LoginResponse!
-    change_password(old_password: String!, new_password: String!): ChangePasswordResponse!
-    reset_password(medium: String!, medium_id: String!, otp: String!, new_password: String!): ResetPasswordResponse!
+    verify_otp(medium: String!, medium_id: String!, otp: Password!, login_to_user: Boolean, use_jwt: Boolean, purpose: String): VerifyOTPResponse!
+    pin_login(user: String!, pin: Password!, device: String): LoginResponse!
+    change_password(old_password: Password!, new_password: Password!): ChangePasswordResponse!
+    reset_password(medium: String!, medium_id: String!, otp: Password!, new_password: Password!): ResetPasswordResponse!
 }
