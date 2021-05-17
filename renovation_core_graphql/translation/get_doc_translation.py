@@ -19,20 +19,22 @@ def get_doc_translation_resolver(obj, info: GraphQLResolveInfo, **kwargs):
                 language__name=lang,
                 docfield=frappe._dict(doctype="DocField", name=df.name),
                 fieldname=fieldname,
-                fieldtype=df.fieldtype
+                fieldtype=df.fieldtype,
             )
             if df.fieldtype == "Select":
-                tr_item.value = value.value
-                tr_item.select_option_source_text = doc.get(fieldname)
+                tr_item.source_text = doc.get(fieldname)
+                tr_item.translated_text = value.value
+
                 for select_src_text, select_value in value.get("values", {}).items():
                     if select_src_text == doc.get(fieldname):
                         continue
                     tr_copy = frappe._dict(tr_item)
-                    tr_copy.select_option_source_text = select_src_text
-                    tr_copy.value = select_value
+                    tr_copy.source_text = select_src_text
+                    tr_copy.translated_text = select_value
                     data.append(tr_copy)
             else:
-                tr_item.value = value
+                tr_item.source_text = doc.get(fieldname)
+                tr_item.translated_text = value
 
             data.append(tr_item)
 
