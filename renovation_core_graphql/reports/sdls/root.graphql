@@ -1,7 +1,7 @@
 scalar RenovationReportFilterInput
 scalar ReportRowResult
 
-type GetReportResult{
+type ReportResult{
     result : [ReportRowResult]
     columns: [ReportColumn]
     message: String,
@@ -20,6 +20,6 @@ enum ExportFileFormatType{
 }
 
 extend type Query {
-    getRenovationReport(report: String!, filter: RenovationReportFilterInput): GetReportResult
+    getRenovationReport(report: String!, filter: RenovationReportFilterInput): ReportResult
     exportRenovationReport(report_name: String, custom_columns: [ExportReportCustomColumn], file_format_type: ExportFileFormatType!, visible_idx:[Int!]!, filter:RenovationReportFilterInput): String
 }
