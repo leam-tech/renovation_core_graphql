@@ -1,0 +1,18 @@
+scalar RenovationReportFilterInput
+scalar ReportRowResult
+
+type GetReportResult{
+    result : [ReportRowResult]
+    columns: [ReportColumn]
+    message: String,
+    chart: String,
+    report_summary: String,
+    skip_total_row: Int,
+    status: String,
+    execution_time: Float,
+    add_total_row: Int,
+}
+
+extend type Query {
+    getRenovationReport(report: String!, filter: RenovationReportFilterInput): GetReportResult
+}

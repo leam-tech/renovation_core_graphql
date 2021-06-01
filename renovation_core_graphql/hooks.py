@@ -24,6 +24,7 @@ graphql_schema_processors = [
     "renovation_core_graphql.model.bind_schema",
     "renovation_core_graphql.notifications.bind_schema",
     "renovation_core_graphql.translation.bind_schema",
+    "renovation_core_graphql.reports.bind_schema",
 ]
 
 # Includes in <head>
