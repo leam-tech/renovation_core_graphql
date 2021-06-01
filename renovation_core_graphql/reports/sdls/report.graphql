@@ -1,0 +1,65 @@
+type Report implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  parent: BaseDocType
+  parentfield: String
+  parenttype: String
+  idx: Int
+  docstatus: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  report_name: String!
+  ref_doctype: DocType!
+  ref_doctype__name: String
+  reference_report: String
+  is_standard: String!
+  module: ModuleDef
+  module__name: String
+  report_type: String!
+  letter_head: LetterHead
+  letter_head__name: String
+  add_total_row: Int
+  disabled: Int
+  disable_prepared_report: Int
+  prepared_report: Int
+  filters: [ReportFilter!]!
+  columns: [ReportColumn!]!
+  query: String
+  report_script: String
+  javascript: String
+  json: String
+  roles: [HasRole!]!
+}
+
+enum ReportSortField {
+  NAME
+  CREATION
+  MODIFIED
+  REPORT_NAME
+}
+
+input ReportSortingInput {
+  direction: SortDirection!
+  field: ReportSortField!
+}
+
+type ReportCountableEdge {
+  cursor: String!
+  node: Report!
+}
+
+type ReportCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ReportCountableEdge!]!
+}
+
+extend type Query {
+  Report(name: String!): Report!
+  Reports(filter: [DBFilterInput], sortBy: ReportSortingInput, before: String, after: String, first: Int, last: Int): ReportCountableConnection!
+}

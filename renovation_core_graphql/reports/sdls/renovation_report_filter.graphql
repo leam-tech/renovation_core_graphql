@@ -1,0 +1,49 @@
+type RenovationReportFilter implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  parent: BaseDocType
+  parentfield: String
+  parenttype: String
+  idx: Int
+  docstatus: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  label: String
+  fieldname: String!
+  reqd: Int
+  fieldtype: String!
+  options: String
+  default_value: String
+}
+
+enum RenovationReportFilterSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input RenovationReportFilterSortingInput {
+  direction: SortDirection!
+  field: RenovationReportFilterSortField!
+}
+
+type RenovationReportFilterCountableEdge {
+  cursor: String!
+  node: RenovationReportFilter!
+}
+
+type RenovationReportFilterCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [RenovationReportFilterCountableEdge!]!
+}
+
+extend type Query {
+  RenovationReportFilter(name: String!): RenovationReportFilter!
+  RenovationReportFilters(filter: [DBFilterInput], sortBy: RenovationReportFilterSortingInput, before: String, after: String, first: Int, last: Int): RenovationReportFilterCountableConnection!
+}
