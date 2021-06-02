@@ -1,0 +1,10 @@
+type SearchLinkResult{
+    description: String
+    value: String
+}
+
+scalar SearchLinkFilterInput
+
+extend type Query {
+    search_link(doctype: String!, txt: String, filters: SearchLinkFilterInput, page_length: Int, searchfield: String, reference_doctype: String): [SearchLinkResult!]
+}
