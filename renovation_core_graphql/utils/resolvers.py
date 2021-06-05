@@ -5,7 +5,9 @@ from graphql import GraphQLResolveInfo
 
 def search_link_resolver(obj, info: GraphQLResolveInfo, **kwargs):
     search_link(kwargs.get("doctype"), kwargs.get("txt", ""),
-                kwargs.get("filters"), kwargs.get("page_length"),
-                kwargs.get("searchfield"), kwargs.get("reference_doctype"))
+                filters=kwargs.get("filters"),
+                page_length=kwargs.get("page_length"),
+                searchfield=kwargs.get("searchfield"),
+                reference_doctype=kwargs.get("reference_doctype"))
 
     return frappe.response['results']
