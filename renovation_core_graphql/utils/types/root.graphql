@@ -2,7 +2,12 @@ type SearchLinkResult{
     description: String
     value: String
 }
-
+"""
+Filters are accepted in the form of
+1. dict eg {"name": "TODO" }
+2. list eg [["name", "=", "TODO"]]
+3. JSON String eg "[[\"name\", \"=\", \"TODO\"]]"
+"""
 scalar SearchLinkFilterInput
 
 extend type Query {
