@@ -1,5 +1,5 @@
 from graphql import GraphQLSchema
-from .resolvers import search_link_resolver
+from renovation_core_graphql.utils.resolvers import search_link_resolver
 
 
 def bind_schema(schema: GraphQLSchema):
