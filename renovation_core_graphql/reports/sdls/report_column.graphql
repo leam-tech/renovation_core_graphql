@@ -1,0 +1,48 @@
+type ReportColumn implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  parent: BaseDocType
+  parentfield: String
+  parenttype: String
+  idx: Int
+  docstatus: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  fieldname: String!
+  label: String!
+  fieldtype: String!
+  options: String
+  width: Int
+}
+
+enum ReportColumnSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ReportColumnSortingInput {
+  direction: SortDirection!
+  field: ReportColumnSortField!
+}
+
+type ReportColumnCountableEdge {
+  cursor: String!
+  node: ReportColumn!
+}
+
+type ReportColumnCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ReportColumnCountableEdge!]!
+}
+
+extend type Query {
+  ReportColumn(name: String!): ReportColumn!
+  ReportColumns(filter: [DBFilterInput], sortBy: ReportColumnSortingInput, before: String, after: String, first: Int, last: Int): ReportColumnCountableConnection!
+}

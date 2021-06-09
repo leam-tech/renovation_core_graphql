@@ -1,0 +1,25 @@
+scalar RenovationReportFilterInput
+scalar ReportRowResult
+
+type ReportResult{
+    result : [ReportRowResult]
+    columns: [ReportColumn]
+    message: String,
+    chart: String,
+    report_summary: String,
+    skip_total_row: Int,
+    status: String,
+    execution_time: Float,
+    add_total_row: Int,
+}
+
+scalar ExportReportCustomColumn
+
+enum ExportFileFormatType{
+    EXCEL
+}
+
+extend type Query {
+    getRenovationReport(report: String!, filter: RenovationReportFilterInput): ReportResult
+    exportRenovationReport(report_name: String, custom_columns: [ExportReportCustomColumn], file_format_type: ExportFileFormatType!, visible_idx:[Int!]!, filter:RenovationReportFilterInput): String
+}

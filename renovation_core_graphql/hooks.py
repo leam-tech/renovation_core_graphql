@@ -18,6 +18,7 @@ graphql_sdl_dir = [
     "./renovation_core_graphql/renovation_core_graphql/model/sdls",
     "./renovation_core_graphql/renovation_core_graphql/notifications/sdls",
     "./renovation_core_graphql/renovation_core_graphql/translation/types",
+    "./renovation_core_graphql/renovation_core_graphql/reports/sdls",
 ]
 
 graphql_schema_processors = [
@@ -25,6 +26,7 @@ graphql_schema_processors = [
     "renovation_core_graphql.model.bind_schema",
     "renovation_core_graphql.notifications.bind_schema",
     "renovation_core_graphql.translation.bind_schema",
+    "renovation_core_graphql.reports.bind_schema",
 ]
 
 # Includes in <head>
