@@ -1,0 +1,52 @@
+type LetterHead implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  parent: BaseDocType
+  parentfield: String
+  parenttype: String
+  idx: Int
+  docstatus: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  letter_head_name: String!
+  source: String
+  disabled: Int
+  is_default: Int
+  image: String
+  content: String
+  footer: String
+}
+
+enum LetterHeadSortField {
+  NAME
+  CREATION
+  MODIFIED
+  LETTER_HEAD_NAME
+  IS_DEFAULT
+}
+
+input LetterHeadSortingInput {
+  direction: SortDirection!
+  field: LetterHeadSortField!
+}
+
+type LetterHeadCountableEdge {
+  cursor: String!
+  node: LetterHead!
+}
+
+type LetterHeadCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [LetterHeadCountableEdge!]!
+}
+
+extend type Query {
+  LetterHead(name: String!): LetterHead!
+  LetterHeads(filter: [DBFilterInput], sortBy: LetterHeadSortingInput, before: String, after: String, first: Int, last: Int): LetterHeadCountableConnection!
+}
