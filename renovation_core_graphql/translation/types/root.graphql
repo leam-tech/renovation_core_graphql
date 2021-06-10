@@ -1,6 +1,6 @@
 extend type Mutation {
-    addTranslation(language: String!, source_text: String!, translated_text: String!,
-      context: String, doctype: String, docname: String, docfield: String): Translation!
+    addTranslation(translation: AddTranslationInput!): Translation!
+    addTranslationMultiple(translations: [AddTranslationInput!]!): [Translation!]!
 }
 
 extend type Query {
@@ -16,6 +16,16 @@ type DocTranslationItem {
 
     source_text: String
     translated_text: String!
+}
+
+input AddTranslationInput {
+  language: String!
+  source_text: String!
+  translated_text: String!
+  context: String
+  doctype: String
+  docname: String
+  docfield: String
 }
 
 type Translation implements BaseDocType {
