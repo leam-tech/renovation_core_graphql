@@ -11,5 +11,5 @@ Filters are accepted in the form of
 scalar SearchLinkFilterInput
 
 extend type Query {
-    search_link(doctype: String!, txt: String, filters: SearchLinkFilterInput, page_length: Int, searchfield: String, reference_doctype: String): [SearchLinkResult!]
+    search_link(doctype: String!, txt: String!, filters: SearchLinkFilterInput, page_length: Int, searchfield: String, reference_doctype: String): [SearchLinkResult!]
 }
