@@ -1,0 +1,15 @@
+type SearchLinkResult{
+    description: String
+    value: String
+}
+"""
+Filters are accepted in the form of
+1. dict eg {"name": "TODO" }
+2. list eg [["name", "=", "TODO"]]
+3. JSON String eg "[[\"name\", \"=\", \"TODO\"]]"
+"""
+scalar SearchLinkFilterInput
+
+extend type Query {
+    search_link(doctype: String!, txt: String!, filters: SearchLinkFilterInput, page_length: Int, searchfield: String, reference_doctype: String): [SearchLinkResult!]
+}
