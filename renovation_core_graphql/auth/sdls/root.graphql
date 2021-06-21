@@ -9,4 +9,5 @@ extend type Mutation {
     pin_login(user: String!, pin: Password!, device: String): LoginResponse!
     change_password(old_password: Password!, new_password: Password!): ChangePasswordResponse!
     reset_password(medium: String!, medium_id: String!, otp: Password!, new_password: Password!): ResetPasswordResponse!
+    reset_password_with_key(key: String!, new_password: String!): ResetPasswordWithKeyResponse!
 }

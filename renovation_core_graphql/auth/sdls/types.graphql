@@ -13,6 +13,11 @@ enum OTPVerifyStatus {
     WEAK_PASSWORD
 }
 
+enum ResetPasswordWithKeyErrorCodes {
+    INVALID_KEY
+    WEAK_PASSWORD
+}
+
 type LoginResponse {
     user: User!
     message: String!
@@ -53,5 +58,11 @@ type ChangePasswordResponse {
 
 type ResetPasswordResponse {
     status: OTPVerifyStatus!
+    user: User
+}
+
+type ResetPasswordWithKeyResponse {
+    status: AuthStatus!
+    error_code: ResetPasswordWithKeyErrorCodes
     user: User
 }
