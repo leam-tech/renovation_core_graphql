@@ -4,6 +4,8 @@ from frappe.desk.query_report import export_query
 from graphql import GraphQLResolveInfo
 from renovation_core.utils.report import get_report
 
+EXPIRY_IN_HOURS = 1
+
 
 def get_renovation_report_resolver(obj, info: GraphQLResolveInfo, **kwargs):
     frappe.local.form_dict.report = kwargs.get("report")
@@ -30,4 +32,9 @@ def export_renovation_report_resolver(obj, info: GraphQLResolveInfo, **kwargs):
         "decode": False
     })
     ret.save()
+    frappe.get_doc({
+        "doctype": "Temporary File",
+        "file": ret.file_url,
+        "expires_in_hours": EXPIRY_IN_HOURS
+    }).insert(ignore_permissions=True)
     return ret.get("file_url")
