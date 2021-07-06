@@ -36,7 +36,7 @@ def get_translated(doc, fieldname, value):
         key
     """
     if not isinstance(value, str):
-        return value
+        value = ""
 
     plain_translation = frappe._(value)
 
