@@ -11,7 +11,7 @@ def resolve(obj, info: GraphQLResolveInfo, **kwargs):
         obj=obj, info=info, **kwargs
     )
 
-    if isinstance(value, str):
+    if isinstance(value, str) or value is None:
         doctype = obj.get('doctype') or get_singular_doctype(info.parent_type.name)
         try:
             cached_doc = frappe.get_cached_doc(doctype, obj.get("name"))
