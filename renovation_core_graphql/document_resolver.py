@@ -1,3 +1,4 @@
+from frappe.utils import cint
 from graphql import GraphQLResolveInfo
 
 import frappe
@@ -10,9 +11,11 @@ def resolve(obj, info: GraphQLResolveInfo, **kwargs):
     value = document_resolver(
         obj=obj, info=info, **kwargs
     )
+    doctype = obj.get('doctype') or get_singular_doctype(info.parent_type.name)
+    meta = frappe.get_meta(doctype)
+    df = meta.get_field(info.field_name)
 
-    if isinstance(value, str) or value is None:
-        doctype = obj.get('doctype') or get_singular_doctype(info.parent_type.name)
+    if df and cint(df.get("translatable")):
         try:
             cached_doc = frappe.get_cached_doc(doctype, obj.get("name"))
         except BaseException:
