@@ -1,8 +1,8 @@
 scalar RenovationReportFilterInput
-scalar ReportRowResult
+scalar ReportCellResult
 
 type ReportResult{
-    result : [ReportRowResult]
+    result : [[ReportCellResult]]
     columns: [ReportColumn]
     message: String,
     chart: String,
