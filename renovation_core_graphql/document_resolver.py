@@ -3,6 +3,7 @@ from graphql import GraphQLResolveInfo
 
 import frappe
 from frappe_graphql.utils.resolver import document_resolver, get_singular_doctype
+from renovation_core.utils.translate import get_ctx_translation
 
 
 def resolve(obj, info: GraphQLResolveInfo, **kwargs):
@@ -21,62 +22,6 @@ def resolve(obj, info: GraphQLResolveInfo, **kwargs):
         except BaseException:
             cached_doc = obj
 
-        return get_translated(cached_doc, info.field_name, value)
+        return get_ctx_translation(
+            doc=cached_doc, fieldname=info.field_name, value=value)
     return value
-
-
-def get_translated(doc, fieldname, value):
-    """
-    Precedence Order:
-        key:doctype:name:fieldname
-        *:doctype:name:fieldname
-        key:doctype:name
-        key:parenttype:parent
-        key:doctype:fieldname
-        key:doctype
-        key:parenttype
-
-        key
-    """
-    if not isinstance(value, str):
-        value = ""
-
-    plain_translation = frappe._(value)
-
-    # key:doctype:name:fieldname
-    field_translation = frappe._(value, context=f"{doc.doctype}:{doc.name}:{fieldname}")
-    if field_translation != plain_translation:
-        return field_translation
-
-    # *:doctype:name:fieldname
-    field_translation = frappe._("*", context=f"{doc.doctype}:{doc.name}:{fieldname}")
-    if field_translation != frappe._("*"):
-        return field_translation
-
-    # key:doctype:name
-    doc_translation = frappe._(value, context=f"{doc.doctype}:{doc.name}")
-    if doc_translation != plain_translation:
-        return doc_translation
-
-    # key:parenttype:parent
-    if doc.get("parenttype") and doc.get("parent"):
-        parent_translation = frappe._(value, context=f"{doc.parenttype}:{doc.parent}")
-        if parent_translation != plain_translation:
-            return parent_translation
-
-    # key:doctype:fieldname
-    doctype_field_translation = frappe._(value, context=f"{doc.doctype}:{fieldname}")
-    if doctype_field_translation != plain_translation:
-        return doctype_field_translation
-
-    # key:doctype
-    doctype_translation = frappe._(value, context=f"{doc.doctype}")
-    if doctype_translation != plain_translation:
-        return doctype_translation
-
-    if doc.get("parenttype"):
-        parenttype_translation = frappe._(value, context=f"{doc.parenttype}")
-        if parenttype_translation != plain_translation:
-            return parenttype_translation
-
-    return frappe._(value)
