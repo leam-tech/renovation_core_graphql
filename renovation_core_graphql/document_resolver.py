@@ -3,7 +3,7 @@ from graphql import GraphQLResolveInfo
 
 import frappe
 from frappe_graphql.utils.resolver import document_resolver, get_singular_doctype
-from renovation_core.utils.translate import get_doc_field_translation
+from renovation_core.utils.translate import get_ctx_translation
 
 
 def resolve(obj, info: GraphQLResolveInfo, **kwargs):
@@ -22,6 +22,6 @@ def resolve(obj, info: GraphQLResolveInfo, **kwargs):
         except BaseException:
             cached_doc = obj
 
-        return get_doc_field_translation(
+        return get_ctx_translation(
             doc=cached_doc, fieldname=info.field_name, value=value)
     return value
