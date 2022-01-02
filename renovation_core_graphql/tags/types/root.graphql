@@ -12,7 +12,7 @@ input TagRemoveInput {
 
 
 extend type Query {
-    tags(doctype: String!, search: String): [String!]
+    tags(doctype: String, search: String): [String!]
 }
 
 extend type Mutation {
