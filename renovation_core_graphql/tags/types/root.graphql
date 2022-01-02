@@ -1,0 +1,21 @@
+input TagAddInput {
+    doctype: String!
+    docname: String!
+    tag: String!
+}
+
+input TagRemoveInput {
+    doctype: String!
+    docname: String!
+    tag: String!
+}
+
+
+extend type Query {
+    tags(doctype: String!, search: String): [String!]
+}
+
+extend type Mutation {
+    addTag(input: TagAddInput!): String!
+    removeTag(input: TagRemoveInput!): Boolean!
+}
