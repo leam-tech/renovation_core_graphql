@@ -10,9 +10,13 @@ input TagRemoveInput {
     tag: String!
 }
 
+input TagFilterInput{
+    doctype: String
+    search: String
+}
 
 extend type Query {
-    tags(doctype: String, search: String): [String!]
+    tags(filters: TagFilterInput, limitStart: Int, limitPageLength: Int): [String!]
 }
 
 extend type Mutation {

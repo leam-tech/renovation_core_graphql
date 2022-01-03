@@ -2,6 +2,7 @@ from graphql import GraphQLResolveInfo
 
 import frappe
 from frappe.desk.doctype.tag.tag import add_tag, remove_tag
+from frappe.utils import cint
 
 
 def add_tag_link_resolver(obj, info: GraphQLResolveInfo, **kwargs):
@@ -22,19 +23,28 @@ def remove_tag_link_resolver(obj, info: GraphQLResolveInfo, **kwargs):
 
 
 def get_tags_resolver(obj, info: GraphQLResolveInfo, **kwargs):
-    doctype = kwargs.get("doctype")
-    search = kwargs.get("search") or ""
+    filters = kwargs.get("filters") or {}
+    doctype = filters.get("doctype")
+    search = filters.get("search") or ""
+    limit_start = cint(kwargs.get("limitStart")) or 0
+    limit_page_length = cint(kwargs.get("limitPageLength")) or 10
 
     # This will return all tags in the system
     if not doctype:
         tags = frappe.get_all("Tag", filters={"name": ["like", "%{}%".format(search)]},
-                              fields=["name"])
+                              fields=["name"], limit_start=limit_start,
+                              limit_page_length=limit_page_length)
         return [tag.get("name") for tag in tags]
 
     # This will return all tags for a specific doctype
     query = """
         SELECT DISTINCT tag FROM `tabTag Link`
          WHERE parenttype = %s AND tag LIKE %s
+         LIMIT %s, %s
         """
-    tags = frappe.db.sql(query, [doctype, "%" + search + "%"], as_dict=True)
+
+    variables = [doctype, "%" + search + "%", limit_start, limit_page_length]
+
+    tags = frappe.db.sql(query, variables, as_dict=True)
+
     return [tag.get("tag") for tag in tags]
