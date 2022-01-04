@@ -58,6 +58,4 @@ def get_tags_resolver(obj, info: GraphQLResolveInfo, **kwargs):
 
     variables = [doctype, "%" + search + "%", limit_start, limit_page_length]
 
-    tags = frappe.db.sql(query, variables, as_dict=True)
-
-    return [tag.get("tag") for tag in tags]
+    return frappe.db.sql_list(query, variables)
