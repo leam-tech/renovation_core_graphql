@@ -1,25 +1,47 @@
 input TagAddInput {
+    """The doctype of the tag"""
     doctype: String!
+    """The document to attach the tag to"""
     docname: String!
+    """The tag name. Case insensitive"""
     tag: String!
 }
 
 input TagRemoveInput {
+    """The doctype of the tag"""
     doctype: String!
+    """The document to attach the tag to"""
     docname: String!
+    """The tag name. Case insensitive"""
     tag: String!
 }
 
 input TagFilterInput{
+    """Search by doctype"""
     doctype: String
+    """Search by the tag name. Supports partial string matching."""
     search: String
 }
 
 extend type Query {
-    tags(filters: TagFilterInput, limitStart: Int, limitPageLength: Int): [String!]
+    tags(
+        """Filter arguments"""
+        filters: TagFilterInput,
+        """Offset. Defaults to 0"""
+        limitStart: Int,
+        """Length of the list. Defaults to 10"""
+        limitPageLength: Int): [String!]
 }
 
 extend type Mutation {
+    """
+    Add a tag to a specific document.
+    Adding the same tag again is a no-op.
+    """
     addTag(input: TagAddInput!): String!
+    """
+    Remove a tag from a specific document.
+    Removing a tag that does not exist is a no-op.
+    """
     removeTag(input: TagRemoveInput!): Boolean!
 }

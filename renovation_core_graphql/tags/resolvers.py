@@ -6,6 +6,10 @@ from frappe.utils import cint
 
 
 def add_tag_link_resolver(obj, info: GraphQLResolveInfo, **kwargs):
+    """
+    Add a tag to a specific document.
+    Adding the same tag again is a no-op.
+    """
     input = kwargs.get("input")
     doctype = input.get("doctype")
     docname = input.get("docname")
@@ -14,6 +18,10 @@ def add_tag_link_resolver(obj, info: GraphQLResolveInfo, **kwargs):
 
 
 def remove_tag_link_resolver(obj, info: GraphQLResolveInfo, **kwargs):
+    """
+    Remove a tag from a specific document.
+    Removing a tag that does not exist is a no-op.
+    """
     input = kwargs.get("input")
     doctype = input.get("doctype")
     docname = input.get("docname")
@@ -23,6 +31,11 @@ def remove_tag_link_resolver(obj, info: GraphQLResolveInfo, **kwargs):
 
 
 def get_tags_resolver(obj, info: GraphQLResolveInfo, **kwargs):
+    """
+    Get tags filtered by doctype and tag name. If none specified, return all tags.
+    Default limitPageLength is 10.
+    Default limitStart is 0.
+    """
     filters = kwargs.get("filters") or {}
     doctype = filters.get("doctype")
     search = filters.get("search") or ""
