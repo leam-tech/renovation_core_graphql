@@ -1,6 +1,7 @@
+from graphql import GraphQLResolveInfo
+
 import frappe
 from frappe.desk.search import search_link
-from graphql import GraphQLResolveInfo
 
 
 def search_link_resolver(obj, info: GraphQLResolveInfo, **kwargs):
