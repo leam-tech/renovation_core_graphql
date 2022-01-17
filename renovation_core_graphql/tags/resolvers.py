@@ -10,11 +10,17 @@ def add_tag_link_resolver(obj, info: GraphQLResolveInfo, **kwargs):
     Add a tag to a specific document.
     Adding the same tag again is a no-op.
     """
-    input = kwargs.get("input")
-    doctype = input.get("doctype")
-    docname = input.get("docname")
-    tag = input.get("tag")
-    return add_tag(tag=tag, dt=doctype, dn=docname)
+    r = frappe._dict(success_count=0, failure_count=0, total_count=len(kwargs.get("input")))
+    for input in kwargs.get("input"):
+        try:
+            doctype = input.get("doctype")
+            docname = input.get("docname")
+            tag = input.get("tag")
+            add_tag(tag=tag, dt=doctype, dn=docname)
+            r.success_count += 1
+        except Exception as e:
+            r.failure_count += 1
+    return r
 
 
 def remove_tag_link_resolver(obj, info: GraphQLResolveInfo, **kwargs):
@@ -22,12 +28,17 @@ def remove_tag_link_resolver(obj, info: GraphQLResolveInfo, **kwargs):
     Remove a tag from a specific document.
     Removing a tag that does not exist is a no-op.
     """
-    input = kwargs.get("input")
-    doctype = input.get("doctype")
-    docname = input.get("docname")
-    tag = input.get("tag")
-    remove_tag(tag=tag, dt=doctype, dn=docname)
-    return True
+    r = frappe._dict(success_count=0, failure_count=0, total_count=len(kwargs.get("input")))
+    for input in kwargs.get("input"):
+        try:
+            doctype = input.get("doctype")
+            docname = input.get("docname")
+            tag = input.get("tag")
+            remove_tag(tag=tag, dt=doctype, dn=docname)
+            r.success_count += 1
+        except Exception as e:
+            r.failure_count += 1
+    return r
 
 
 def get_tags_resolver(obj, info: GraphQLResolveInfo, **kwargs):
