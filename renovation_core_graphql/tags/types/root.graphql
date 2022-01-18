@@ -23,6 +23,24 @@ input TagFilterInput{
     search: String
 }
 
+type RemoveTag {
+    """How many tags were removed successfully."""
+    success_count: Int!
+    """How many tags failed to be removed."""
+    failure_count: Int!
+    """Total tags being processed."""
+    total_count: Int!
+}
+
+type AddTag {
+    """How many tags were saved successfully."""
+    success_count: Int!
+    """How many tags failed to save."""
+    failure_count: Int!
+    """Total tags being processed."""
+    total_count: Int!
+}
+
 extend type Query {
     tags(
         """Filter arguments"""
@@ -38,10 +56,10 @@ extend type Mutation {
     Add a tag to a specific document.
     Adding the same tag again is a no-op.
     """
-    addTag(input: TagAddInput!): String!
+    addTag(input: [TagAddInput!]!): AddTag
     """
     Remove a tag from a specific document.
     Removing a tag that does not exist is a no-op.
     """
-    removeTag(input: TagRemoveInput!): Boolean!
+    removeTag(input: [TagRemoveInput!]!): RemoveTag
 }
