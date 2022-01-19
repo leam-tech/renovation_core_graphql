@@ -10,6 +10,26 @@ Filters are accepted in the form of
 """
 scalar SearchLinkFilterInput
 
+"""
+For example:
+1. "{\"Doctype\": [\"field1\",\"field2\",\"field3\"]}"
+2. "{\"Doctype\":[\"field1\"], \"Child_doctype\":[\"field1\"], \"Child_doctype\":[]}"
+"""
+scalar ExportDataColumns
+
+"""
+Filters are accepted in the form of
+1. dict eg {"name": "TODO" }
+2. list eg [["name", "=", "TODO"]]
+3. JSON String eg "[[\"name\", \"=\", \"TODO\"]]"
+"""
+scalar ExportDataFilters
+
+enum ExportDataFileType {
+    EXCEL
+}
+
 extend type Query {
     search_link(doctype: String!, txt: String!, filters: SearchLinkFilterInput, page_length: Int, searchfield: String, reference_doctype: String): [SearchLinkResult!]
+    export_data(doctype: String! , select_columns: ExportDataColumns, file_type: ExportDataFileType, filters: ExportDataFilters): String
 }
