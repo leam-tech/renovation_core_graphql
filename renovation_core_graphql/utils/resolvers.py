@@ -2,7 +2,7 @@ import frappe
 from enum import Enum
 
 from frappe.core.doctype.access_log.access_log import make_access_log
-from frappe.core.doctype.data_export.exporter import DataExporter
+from frappe.core.doctype.data_import.exporter import Exporter
 from frappe.desk.search import search_link
 from graphql import GraphQLResolveInfo
 
@@ -29,8 +29,9 @@ def export_data_resolver(obj, info: GraphQLResolveInfo, **kwargs):
     filters = kwargs.get("filters")
 
     make_access_log(doctype=doctype, file_type=file_type, columns=select_columns, filters=filters)
-    exporter = DataExporter(doctype=doctype, parent_doctype=None, select_columns=select_columns,
-                            file_type=file_type, filters=filters, template=False)
+    exporter = Exporter(doctype=doctype, export_fields=frappe.parse_json(select_columns or '{}'),
+                        export_data=True, file_type=file_type,
+                        export_filters=frappe.parse_json(filters or '[]'))
     exporter.build_response()
     file_doc = frappe.get_doc({
         "doctype": "File",
