@@ -4,6 +4,7 @@ enum AuthStatus {
 }
 
 enum OTPVerifyStatus {
+    SUCCESS
     FAILED
     VERIFIED
     NO_LINKED_USER
