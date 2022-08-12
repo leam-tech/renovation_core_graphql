@@ -20,30 +20,3 @@ type ReportFilter implements BaseDocType {
   options: String
   wildcard_filter: Int
 }
-
-enum ReportFilterSortField {
-  NAME
-  CREATION
-  MODIFIED
-}
-
-input ReportFilterSortingInput {
-  direction: SortDirection!
-  field: ReportFilterSortField!
-}
-
-type ReportFilterCountableEdge {
-  cursor: String!
-  node: ReportFilter!
-}
-
-type ReportFilterCountableConnection {
-  pageInfo: PageInfo!
-  totalCount: Int
-  edges: [ReportFilterCountableEdge!]!
-}
-
-extend type Query {
-  ReportFilter(name: String!): ReportFilter!
-  ReportFilters(filter: [DBFilterInput], sortBy: ReportFilterSortingInput, before: String, after: String, first: Int, last: Int): ReportFilterCountableConnection!
-}
