@@ -19,30 +19,3 @@ type ReportColumn implements BaseDocType {
   options: String
   width: Int
 }
-
-enum ReportColumnSortField {
-  NAME
-  CREATION
-  MODIFIED
-}
-
-input ReportColumnSortingInput {
-  direction: SortDirection!
-  field: ReportColumnSortField!
-}
-
-type ReportColumnCountableEdge {
-  cursor: String!
-  node: ReportColumn!
-}
-
-type ReportColumnCountableConnection {
-  pageInfo: PageInfo!
-  totalCount: Int
-  edges: [ReportColumnCountableEdge!]!
-}
-
-extend type Query {
-  ReportColumn(name: String!): ReportColumn!
-  ReportColumns(filter: [DBFilterInput], sortBy: ReportColumnSortingInput, before: String, after: String, first: Int, last: Int): ReportColumnCountableConnection!
-}
