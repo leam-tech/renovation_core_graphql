@@ -12,8 +12,7 @@ app_color = "grey"
 app_email = "info@leam.ae"
 app_license = "MIT"
 
-doctype_resolver_processors = [
-    "renovation_core_graphql.translation.resolver.setup_ctx_translation_resolver"]
+gql_default_document_resolver = "renovation_core_graphql.document_resolver.resolve"
 
 graphql_sdl_dir = [
     "./renovation_core_graphql/renovation_core_graphql/auth/sdls",
