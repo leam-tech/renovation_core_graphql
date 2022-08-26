@@ -28,7 +28,10 @@ def verify_otp_resolver(obj, info: GraphQLResolveInfo, **kwargs):
     status_dict = verify_otp(**kwargs)
     status_dict.update(frappe.local.response)
     if status_dict.get("user"):
-        status_dict["user"] = frappe._dict(doctype="User", name=status_dict["user"])
+        user_doc = frappe.get_doc("User", status_dict["user"])
+        user_doc.apply_fieldlevel_read_permissions()
+
+        status_dict["user"] = user_doc.as_dict(convert_dates_to_str=True)
 
     status = status_dict.get("status")
     if status in VERIFY_OTP_STATUS_MAP:

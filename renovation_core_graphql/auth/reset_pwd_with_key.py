@@ -40,8 +40,11 @@ def reset_pwd_with_key_resolver(obj, info: GraphQLResolveInfo, **kwargs):
             r.error_code = ResetPasswordWithKeyErrorCodes.INVALID_KEY
 
         if not r.error_code:
+            user_doc = frappe.get_doc("User", frappe.session.user)
+            user_doc.apply_fieldlevel_read_permissions()
+
             r.status = "SUCCESS"
-            r.user = frappe._dict(doctype="User", name=frappe.session.user)
+            r.user = user_doc.as_dict(convert_dates_to_str=True)
     except Exception as e:
         msg = str(e)
         if frappe._("Invalid key type") in msg:

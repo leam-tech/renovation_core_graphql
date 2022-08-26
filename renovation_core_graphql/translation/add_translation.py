@@ -1,4 +1,3 @@
-import frappe
 from graphql import GraphQLResolveInfo
 from renovation_core.utils.translate import add_translation
 
@@ -15,7 +14,4 @@ def add_translation_resolver(obj, info: GraphQLResolveInfo, **kwargs):
         docfield=tr.get("docfield", None),
     )
 
-    return frappe._dict(
-        doctype="Translation",
-        name=translation.name
-    )
+    return translation.as_dict()

@@ -1,5 +1,8 @@
-import frappe
 from graphql import GraphQLResolveInfo
+
+import frappe
+from frappe_graphql.utils.resolver.dataloaders import get_doctype_dataloader
+
 from renovation_core.utils.translate import get_doc_translations
 
 
@@ -11,13 +14,17 @@ def get_doc_translation_resolver(obj, info: GraphQLResolveInfo, **kwargs):
     data = []
     meta = frappe.get_meta(dt)
     doc = frappe.get_cached_doc(dt, dn)
+
+    lang_loader = get_doctype_dataloader("Language")
+    df_loader = get_doctype_dataloader("DocField")
+
     for lang, field_dict in translation.items():
         for fieldname, value in field_dict.items():
             df = meta.get_field(fieldname)
             tr_item = frappe._dict(
-                language=frappe._dict(doctype="Language", name=lang),
+                language=lang_loader.load(lang),
                 language__name=lang,
-                docfield=frappe._dict(doctype="DocField", name=df.name),
+                docfield=df_loader.load(df.name),
                 fieldname=fieldname,
                 fieldtype=df.fieldtype,
             )

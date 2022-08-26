@@ -19,7 +19,11 @@ def login_resolver(obj, info: GraphQLResolveInfo, **kwargs):
         login.run_trigger('on_session_creation')
 
         obj = frappe.local.response
-        obj["user"] = frappe._dict(doctype="User", name=obj["user"])
+
+        user_doc = frappe.get_doc("User", obj["user"])
+        user_doc.apply_fieldlevel_read_permissions()
+
+        obj["user"] = user_doc.as_dict(convert_dates_to_str=True)
     except frappe.AuthenticationError as e:
         raise GraphQLError("Invalid Credentials", original_error=e)
     except Exception as e:
